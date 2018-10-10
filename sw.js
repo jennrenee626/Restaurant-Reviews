@@ -4,8 +4,7 @@
 let restaurantCache = 'cache-v1';
 self.addEventListener('install', function(e) {
     e.waitUntil(
-      caches.open(restaurantCache)
-        .then(function(cache) {
+      caches.open(restaurantCache).then(function(cache) {
           return cache.addAll([
             '/',
             '/index.html',
@@ -32,3 +31,14 @@ self.addEventListener('install', function(e) {
   });
 
   //fetch - return cached site for offline
+  self.addEventListener('fetch', function(e) {
+    e.respondWith(
+        caches.match(e.request).then(function(response) {
+          if (response) {
+            console.log('found');
+            return response
+          }
+          return fetch(e.request);
+        })
+    );
+  });
