@@ -36,7 +36,7 @@ self.addEventListener('fetch', function(e) {
                 return response;
             }else {
                 return fetch(e.request).then(function(response) {
-                    const clonedResponse = response.clone();
+                    const clonedResponse = response.clone(); //general resource: Matthew Cranford walkthrough
                     caches.open(restaurantCache).then(function(cache) {
                     cache.put(e.request, clonedResponse);
                     })
@@ -49,10 +49,3 @@ self.addEventListener('fetch', function(e) {
         })
     )
 })
-
-
-            // var fetchRequest = e.request.clone();
-            // return fetch(fetchRequest).then(function(response) {
-            //     if(!response || response.status !== 200 || response.type !== 'basic') {
-            //         return response;
-            //     }})
